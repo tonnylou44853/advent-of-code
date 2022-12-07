@@ -1,16 +1,9 @@
 # Day 1 Challenge
 
 def elf_carlories(data_path: str):
-    carlories_list = []
-    carlories = 0
     with open(data_path) as f:
-        contents = [line.strip('\n') for line in f.readlines()]
-        for line in contents:
-            if line == '':
-                carlories_list.append(carlories)
-                carlories = 0
-            else:
-                carlories += int(line)
+        contents = [line.splitlines() for line in f.read().split('\n\n')]
+        carlories_list = [sum(list(map(int, line))) for line in contents]
     return carlories_list
 
 def find_top_elf(carlories_list: list):
@@ -26,7 +19,6 @@ def find_top_n_elf(n: int, carlories_list: list):
         carlories_list.pop(indices[-1])
     return indices, top_n_carlories
 
-
 def main():
     data_path = './data/day1_input.txt'
     n = 3
@@ -36,7 +28,6 @@ def main():
     indices, vals = find_top_n_elf(n=n, carlories_list=carlories_list)
     print('The top', n, 'elves are:', indices, 'with total carlories:', vals, 'respectively.')
     print('The total carlories of the', n, 'elves is:', sum(vals))
-    return None
 
 if __name__=='__main__':
     main()
