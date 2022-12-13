@@ -6,20 +6,21 @@ from copy import deepcopy
 
 def create_monkeys(data: list):
     monkey_list = [{} for _ in range(len(data))]
-    operation_map = {
-        '+': lambda x, y: x + y,
-        '*': lambda x, y: x * y,
-    }
+    operation_map = {'+': lambda x, y: x + y, '*': lambda x, y: x * y}
     for i, d in enumerate(data):
-        monkey_list[i]['items'] = list(map(int, d[1].replace('  Starting items: ', '').split(', ')))
+        monkey_list[i]['items'] = list(map(
+            int, d[1].replace('  Starting items: ', '').split(', ')))
         operation = d[2].replace('  Operation: new = old ', '').split(' ')
         if operation[1] != 'old':
-            monkey_list[i]['operation'] = partial(operation_map[operation[0]], y=int(operation[1]))
+            monkey_list[i]['operation'] = partial(
+                operation_map[operation[0]], y=int(operation[1]))
         else:
             monkey_list[i]['operation'] = lambda z: z * z
         monkey_list[i]['test'] = int(d[3].replace('  Test: divisible by ', ''))
-        monkey_list[i][True] = int(d[4].replace('    If true: throw to monkey ', ''))
-        monkey_list[i][False] = int(d[5].replace('    If false: throw to monkey ', ''))
+        monkey_list[i][True] = int(
+            d[4].replace('    If true: throw to monkey ', ''))
+        monkey_list[i][False] = int(
+            d[5].replace('    If false: throw to monkey ', ''))
         monkey_list[i]['inspections'] = 0
     return monkey_list
 
